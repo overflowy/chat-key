@@ -5,7 +5,14 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 #Include libs\JSON.ahk
 
+; Check if the API key is set in the OPENAI_TOKEN environment variable
 EnvGet, API_KEY, OPENAI_TOKEN
+
+; If the API key is not set, show an error message and exit
+if (API_KEY = "") {
+    MsgBox,, Missing API Key, Please set the OPENAI_TOKEN environment variable to your OpenAI API key.
+    ExitApp
+}
 MODEL := "gpt-3.5-turbo"
 
 SendRequest(systemPrompt, userPrompt) {
@@ -40,7 +47,7 @@ SendRequest(systemPrompt, userPrompt) {
     ; Check for errors
     err := jsonResponse.error.message
     if (err != "") {
-        MsgBox,, Error, % err
+        MsgBox,, Response Error, % err
         return
     }
 
