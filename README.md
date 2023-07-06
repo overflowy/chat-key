@@ -1,2 +1,2 @@
-# chat-key
-Supercharge your productivity with ChatGPT and AutoHotkey
+# ChatKey 🚀
+Supercharge your productivity with ChatGPT and AutoHotkey 
