@@ -19,9 +19,14 @@ MAX_TEXT_LENGTH := 2048
 MODEL := "gpt-3.5-turbo"
 TEMPERATURE = 0.7
 
+prevClipboard := ""
+
 ; Copy the selected text to the clipboard
 CopyText() {
     global MAX_TEXT_LENGTH
+
+    ; Save the previous clipboard contents
+    global prevClipboard := clipboard
 
     clipboard := ""
     SendInput, ^c
@@ -30,11 +35,13 @@ CopyText() {
     ; If clipboard is empty, return
     if (clipboard = "") {
         MsgBox,, No Text Selected, Please select some text before running the script.
+        clipboard := prevClipboard
         return
     }
 
     if (StrLen(clipboard) > MAX_TEXT_LENGTH) {
         MsgBox,, Text Too Long, The selected text is too long.
+        clipboard := prevClipboard
         return
     }
 
@@ -43,8 +50,14 @@ CopyText() {
 
 ; Paste the text to the active window
 PasteText(text) {
+    global prevClipboard
+
     clipboard := text
     SendInput, ^v
+
+    ; Restore the previous clipboard contents
+    Sleep, 500
+    clipboard := prevClipboard
 }
 
 SendRequest(systemPrompt, userPrompt) {
