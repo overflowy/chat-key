@@ -20,7 +20,6 @@ if not (FileExist("config.ini")) {
     ExitApp
 }
 
-MAX_TEXT_LENGTH := 4096
 MODEL := "gpt-3.5-turbo"
 TEMPERATURE = 0.7
 
@@ -28,8 +27,6 @@ prevClipboard := ""
 
 ; Copy the selected text to the clipboard
 CopyText() {
-    global MAX_TEXT_LENGTH
-
     ; Save the previous clipboard contents
     global prevClipboard := clipboard
 
@@ -40,13 +37,6 @@ CopyText() {
     ; If clipboard is empty, return
     if (clipboard == "") {
         MsgBox,, No Text Selected, Please select some text before running the script.
-        clipboard := prevClipboard
-        return
-    }
-
-    ; If the text is too long, return
-    if (StrLen(clipboard) > MAX_TEXT_LENGTH) {
-        MsgBox,, Text Too Long, The selected text is too long.
         clipboard := prevClipboard
         return
     }
