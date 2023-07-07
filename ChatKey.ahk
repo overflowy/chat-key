@@ -14,6 +14,11 @@ if (API_KEY = "") {
     ExitApp
 }
 
+if not (FileExist("config.ini")) {
+    MsgBox,, Missing Config File, Please redownload the script and make sure the config file in the same directory as the script.
+    ExitApp
+}
+
 MAX_TEXT_LENGTH := 2048
 
 MODEL := "gpt-3.5-turbo"
