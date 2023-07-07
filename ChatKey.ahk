@@ -30,6 +30,7 @@ CopyText() {
     ; Save the previous clipboard contents
     global prevClipboard := clipboard
 
+    ; Copy the selected text
     clipboard := ""
     SendInput, ^c
     ClipWait, 1
@@ -48,6 +49,7 @@ CopyText() {
 PasteText(text) {
     global prevClipboard
 
+    ; Paste the text
     clipboard := text
     SendInput, ^v
 
@@ -100,26 +102,57 @@ SendRequest(systemPrompt, userPrompt) {
 ; Trigger the script when the user presses Alt + .
 !.::
     try {
-        ; Show a tooltip
-        ToolTip, ...
-        Sleep, 20
-
-        ; Copy the selected text
-        text := CopyText()
-        if (text == "") {
-            ToolTip
-            return
-        }
-
-        ; Replace the selected text with the completion
-        text := SendRequest("You are a helpful assistant.", text)
-        PasteText(text)
-
-        ; Remove the tooltip
-        ToolTip
+        Menu, popupMenu, DeleteAll
     }
     catch e {
-        ToolTip
+        ; Do nothing
     }
 
+    IniRead, menu_items, config.ini, popup_menu
+    prompts := {}
+
+    Loop, Parse, menu_items, `n
+    {
+        section := A_LoopField
+        if (section == "---") { ; Separator
+            Menu, popupMenu, Add
+        }
+        else {
+            IniRead, name, config.ini, % section, name
+            IniRead, shortcut, config.ini, % section, shortcut
+
+            label = &%shortcut% %name%
+            prompts[label] := section
+        }
+        Menu, popupMenu, Add, % label, MenuHandler
+    }
+    Menu, popupMenu, Show
+return
+
+MenuHandler:
+    ; Show a tooltip
+    ToolTip, ...
+    Sleep, 20
+
+    section := prompts[A_ThisMenuItem]
+
+; try {
+
+;     ; Copy the selected text
+;     text := CopyText()
+;     if (text == "") {
+;         ToolTip
+;         return
+;     }
+
+;     ; Replace the selected text with the completion
+;     text := SendRequest("You are a helpful assistant.", text)
+;     PasteText(text)
+
+;     ; Remove the tooltip
+;     ToolTip
+; }
+; catch e {
+;     ToolTip
+; }
 return
