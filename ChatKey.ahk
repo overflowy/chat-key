@@ -14,13 +14,13 @@ if (API_KEY = "") {
     ExitApp
 }
 
+; If the config file is missing, show an error message and exit
 if not (FileExist("config.ini")) {
     MsgBox,, Missing Config File, Please redownload the script and make sure the config file in the same directory as the script.
     ExitApp
 }
 
-MAX_TEXT_LENGTH := 2048
-
+MAX_TEXT_LENGTH := 4096
 MODEL := "gpt-3.5-turbo"
 TEMPERATURE = 0.7
 
@@ -38,12 +38,13 @@ CopyText() {
     ClipWait, 1
 
     ; If clipboard is empty, return
-    if (clipboard = "") {
+    if (clipboard == "") {
         MsgBox,, No Text Selected, Please select some text before running the script.
         clipboard := prevClipboard
         return
     }
 
+    ; If the text is too long, return
     if (StrLen(clipboard) > MAX_TEXT_LENGTH) {
         MsgBox,, Text Too Long, The selected text is too long.
         clipboard := prevClipboard
@@ -71,7 +72,7 @@ SendRequest(systemPrompt, userPrompt) {
     global TEMPERATURE
 
     ; Create a WinHttpRequest object
-    http := ComObjCreate("MSXML2.XMLHTTP.6.0")
+    http := ComObjCreate("Msxml2.ServerXMLHTTP")
 
     ; Prepare the request body object
     requestBody := {}
@@ -91,7 +92,7 @@ SendRequest(systemPrompt, userPrompt) {
 
     ; Retrieve the response
     response := http.ResponseText
-    MsgBox, % response
+    ; -- MsgBox, % response
 
     ; Parse the response to extract the completed text
     jsonResponse := Json.Load(response)
@@ -106,25 +107,28 @@ SendRequest(systemPrompt, userPrompt) {
     return jsonResponse.choices[1].message.content
 }
 
-; Trigger the script when the user presses Alt + Middle Mouse Button
-!MButton::
-    ; Show a tooltip
-    ToolTip, Waiting
-
+; Trigger the script when the user presses Alt + .
+!.::
     try {
+        ; Show a tooltip
+        ToolTip, ...
+        Sleep, 20
+
         ; Copy the selected text
         text := CopyText()
-        if (text = "")
+        if (text == "") {
+            ToolTip
             return
+        }
 
         ; Replace the selected text with the completion
         text := SendRequest("You are a helpful assistant.", text)
         PasteText(text)
 
+        ; Remove the tooltip
         ToolTip
     }
     catch e {
-        ; Remove the tooltip
         ToolTip
     }
 
