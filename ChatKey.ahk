@@ -14,8 +14,38 @@ if (API_KEY = "") {
     ExitApp
 }
 
+MAX_TEXT_LENGTH := 2048
+
 MODEL := "gpt-3.5-turbo"
 TEMPERATURE = 0.7
+
+; Copy the selected text to the clipboard
+CopyText() {
+    global MAX_TEXT_LENGTH
+
+    clipboard := ""
+    SendInput, ^c
+    ClipWait, 1
+
+    ; If clipboard is empty, return
+    if (clipboard = "") {
+        MsgBox,, No Text Selected, Please select some text before running the script.
+        return
+    }
+
+    if (StrLen(clipboard) > MAX_TEXT_LENGTH) {
+        MsgBox,, Text Too Long, The selected text is too long.
+        return
+    }
+
+    return clipboard
+}
+
+; Paste the text to the active window
+PasteText(text) {
+    clipboard := text
+    SendInput, ^v
+}
 
 SendRequest(systemPrompt, userPrompt) {
     global API_KEY
@@ -60,18 +90,19 @@ SendRequest(systemPrompt, userPrompt) {
 
 ; Trigger the script when the user presses Alt + Middle Mouse Button
 !MButton::
-    try {
-        ; Show a tooltip
-        ToolTip, Waiting
+    ; Show a tooltip
+    ToolTip, Waiting
 
-        ; Get the selected text
-        clipboard := ""
-        SendInput, ^c
-        ClipWait, 1
+    try {
+        ; Copy the selected text
+        text := CopyText()
+        if (text = "")
+            return
 
         ; Replace the selected text with the completion
-        clipboard := SendRequest("You are a helpful assistant.", clipboard)
-        SendInput, ^v
+        text := SendRequest("You are a helpful assistant.", text)
+        PasteText(text)
+
         ToolTip
     }
     catch e {
