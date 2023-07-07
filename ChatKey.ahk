@@ -22,7 +22,7 @@ SendRequest(systemPrompt, userPrompt) {
     global MODEL
     global TEMPERATURE
 
-    ; Create a WinHttpRequest hello
+    ; Create a WinHttpRequest object
     http := ComObjCreate("MSXML2.XMLHTTP.6.0")
 
     ; Prepare the request body object
