@@ -16,12 +16,9 @@ if (API_KEY = "") {
 
 ; If the config file is missing, show an error message and exit
 if not (FileExist("config.ini")) {
-    MsgBox,, Missing Config File, Please redownload the script and make sure the config file in the same directory as the script.
+    MsgBox,, Missing Config File, Please make sure the config file is in the same directory as the script.
     ExitApp
 }
-
-MODEL := "gpt-3.5-turbo"
-TEMPERATURE = 0.7
 
 prevClipboard := ""
 
@@ -58,33 +55,45 @@ PasteText(text) {
     clipboard := prevClipboard
 }
 
-SendRequest(systemPrompt, userPrompt) {
-    global API_KEY
-    global MODEL
-    global TEMPERATURE
+PrepareRequestBody(section) {
+    ; Copy the selected text
+    text := CopyText()
+    if (text == "") {
+        return
+    }
 
-    ; Create a WinHttpRequest object
-    http := ComObjCreate("Msxml2.ServerXMLHTTP")
+    ; Read config parameters
+    IniRead, model, config.ini, % section, model, gpt-3.5-turbo
+    IniRead, temperature, config.ini, % section, temperature, 0.7
+    IniRead, systemPrompt, config.ini, % section, system_prompt
 
-    ; Prepare the request body object
+    if (systemPrompt == "ERROR") {
+        MsgBox,, Missing System Prompt, Please set the system_prompt parameter in the config file.
+        return
+    }
+
+    ; Prepare the request body
     requestBody := {}
-    requestBody.model := MODEL
-    requestBody.temperature := TEMPERATURE + 0 ; Convert to number
+    requestBody.model := model
+    requestBody.temperature := temperature + 0 ; Convert to number
+    requestBody.messages := [{"role": "system", "content": systemPrompt}, {"role": "user", "content": text}]
 
-    requestBody.messages := [{"role": "system", "content": systemPrompt}, {"role": "user", "content": userPrompt}]
+    return requestBody
+}
+
+SendRequest(requestBody) {
+    global API_KEY
 
     ; Convert the request body to valid JSON string
     requestBodyJson := Json.Dump(requestBody)
 
-    ; Send the request
+    http := ComObjCreate("Msxml2.ServerXMLHTTP")
     http.Open("POST", "https://api.openai.com/v1/chat/completions", false)
     http.SetRequestHeader("Authorization", "Bearer " . API_KEY)
     http.SetRequestHeader("Content-Type", "application/json")
     http.Send(requestBodyJson)
 
-    ; Retrieve the response
     response := http.ResponseText
-    ; -- MsgBox, % response
 
     ; Parse the response to extract the completed text
     jsonResponse := Json.Load(response)
@@ -130,29 +139,33 @@ SendRequest(systemPrompt, userPrompt) {
 return
 
 MenuHandler:
-    ; Show a tooltip
-    ToolTip, ...
-    Sleep, 20
+    try {
+        section := prompts[A_ThisMenuItem]
+        if not (section) {
+            return
+        }
 
-    section := prompts[A_ThisMenuItem]
+        ; Show a tooltip
+        ToolTip, ...
+        Sleep, 20
 
-; try {
+        ; Prepare the request body
+        requestBody := PrepareRequestBody(section)
+        if (requestBody == "") {
+            ToolTip
+            return
+        }
 
-;     ; Copy the selected text
-;     text := CopyText()
-;     if (text == "") {
-;         ToolTip
-;         return
-;     }
+        ; Send the request
+        text := SendRequest(requestBody)
 
-;     ; Replace the selected text with the completion
-;     text := SendRequest("You are a helpful assistant.", text)
-;     PasteText(text)
+        ; Remove the tooltip
+        ToolTip
 
-;     ; Remove the tooltip
-;     ToolTip
-; }
-; catch e {
-;     ToolTip
-; }
+        ; Paste the text
+        PasteText(text)
+    }
+    catch e {
+        ToolTip
+    }
 return
