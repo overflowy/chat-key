@@ -5,7 +5,7 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 
 #Include libs\JSON.ahk
 
-; Check if the API key is set in the OPENAI_TOKEN environment variable
+; Use OPENAI_TOKEN environment variable
 EnvGet, API_KEY, OPENAI_TOKEN
 
 ; If the API key is not set, show an error message and exit
@@ -22,7 +22,6 @@ if not (FileExist("config.ini")) {
 
 prevClipboard := ""
 
-; Copy the selected text to the clipboard
 CopyText() {
     ; Save the previous clipboard contents
     global prevClipboard := clipboard
@@ -42,7 +41,6 @@ CopyText() {
     return clipboard
 }
 
-; Paste the text to the active window
 PasteText(text) {
     global prevClipboard
 
@@ -66,7 +64,8 @@ PrepareRequestBody(section) {
     IniRead, model, config.ini, % section, model, gpt-3.5-turbo
     IniRead, temperature, config.ini, % section, temperature, 0.7
     IniRead, systemPrompt, config.ini, % section, system_prompt
-
+    
+    ; Make sure system_prompt param is defined
     if (systemPrompt == "ERROR") {
         MsgBox,, Missing System Prompt, Please set the system_prompt parameter in the config file.
         return
@@ -84,7 +83,7 @@ PrepareRequestBody(section) {
 SendRequest(requestBody) {
     global API_KEY
 
-    ; Convert the request body to valid JSON string
+    ; Convert the request body to valid JSON
     requestBodyJson := Json.Dump(requestBody)
 
     http := ComObjCreate("Msxml2.ServerXMLHTTP")
@@ -95,7 +94,7 @@ SendRequest(requestBody) {
 
     response := http.ResponseText
 
-    ; Parse the response to extract the completed text
+    ; Parse the response 
     jsonResponse := Json.Load(response)
 
     ; Check for errors
@@ -104,7 +103,8 @@ SendRequest(requestBody) {
         MsgBox,, Response Error, % err
         return
     }
-
+    
+    ; Return the message content
     return jsonResponse.choices[1].message.content
 }
 
@@ -141,11 +141,13 @@ return
 MenuHandler:
     try {
         section := prompts[A_ThisMenuItem]
+        
+        ; If the section is not defined, return
         if not (section) {
             return
         }
 
-        ; Show a tooltip
+        ; Show a generic tooltip
         ToolTip, ...
         Sleep, 20
 
