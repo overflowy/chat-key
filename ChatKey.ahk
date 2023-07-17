@@ -38,14 +38,26 @@ CopyText() {
         return
     }
 
+    clipboard := RTrim(clipboard, "`n")
     return clipboard
 }
 
 PasteText(text) {
     global prevClipboard
 
-    ; Paste the text
-    clipboard := text
+    IniRead, replaceText, config.ini, settings, replace_text, 0
+    replaceText += 0 ; Convert to number
+
+    if (replaceText == 1) {
+        MsgBox, Replace mode active.
+        clipboard := text
+    }
+    else {
+        MsgBox, Replace mode inactive.
+        newText = %clipboard%`n`n%text%
+        clipboard := newText
+    }
+
     SendInput, ^v
 
     ; Restore the previous clipboard contents
