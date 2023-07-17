@@ -49,11 +49,9 @@ PasteText(text) {
     replaceText += 0 ; Convert to number
 
     if (replaceText == 1) {
-        MsgBox, Replace mode active.
         clipboard := text
     }
     else {
-        MsgBox, Replace mode inactive.
         newText = %clipboard%`n`n%text%
         clipboard := newText
     }
@@ -186,6 +184,6 @@ ShowMenu() {
     return
 }
 
-; Init the popup menu shortcut
-IniRead, popupMenuShortcut, config.ini, settings, popup_menu_shortcut, !.
-Hotkey, % popupMenuShortcut, ShowMenu
+; Init the popup menu hotkey
+IniRead, popupMenuHotkey, config.ini, settings, popup_menu_hotkey, !.
+Hotkey, % popupMenuHotkey, ShowMenu
