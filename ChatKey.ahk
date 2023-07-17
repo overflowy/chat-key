@@ -149,7 +149,7 @@ MenuHandler:
 
         ; Show a generic tooltip
         ToolTip, ...
-        Sleep, 20
+        Sleep, 200
 
         ; Prepare the request body
         requestBody := PrepareRequestBody(section)
