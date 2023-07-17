@@ -108,10 +108,6 @@ SendRequest(requestBody) {
     return jsonResponse.choices[1].message.content
 }
 
-; Init the popup menu shortcut
-IniRead, popupMenuShortcut, config.ini, settings, popup_menu_shortcut, !.
-Hotkey, % popupMenuShortcut, ShowMenu
-
 ; Show the popup menu
 ShowMenu() {
     try {
@@ -141,38 +137,43 @@ ShowMenu() {
     }
     Menu, popupMenu, Show
     return
+
+    MenuHandler:
+        try {
+            section := prompts[A_ThisMenuItem]
+
+            ; If the section is not defined, return
+            if not (section) {
+                MsgBox, "Section not defined"
+                return
+            }
+
+            ; Show a generic tooltip
+            ToolTip, ...
+            Sleep, 200
+
+            ; Prepare the request body
+            requestBody := PrepareRequestBody(section)
+            if (requestBody == "") {
+                ToolTip
+                return
+            }
+
+            ; Send the request
+            text := SendRequest(requestBody)
+
+            ; Remove the tooltip
+            ToolTip
+
+            ; Paste the text
+            PasteText(text)
+        }
+        catch e {
+            ToolTip
+        }
+    return
 }
 
-MenuHandler:
-    try {
-        section := prompts[A_ThisMenuItem]
-
-        ; If the section is not defined, return
-        if not (section) {
-            return
-        }
-
-        ; Show a generic tooltip
-        ToolTip, ...
-        Sleep, 200
-
-        ; Prepare the request body
-        requestBody := PrepareRequestBody(section)
-        if (requestBody == "") {
-            ToolTip
-            return
-        }
-
-        ; Send the request
-        text := SendRequest(requestBody)
-
-        ; Remove the tooltip
-        ToolTip
-
-        ; Paste the text
-        PasteText(text)
-    }
-    catch e {
-        ToolTip
-    }
-return
+; Init the popup menu shortcut
+IniRead, popupMenuShortcut, config.ini, settings, popup_menu_shortcut, !.
+Hotkey, % popupMenuShortcut, ShowMenu
