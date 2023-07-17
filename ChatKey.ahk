@@ -2,7 +2,7 @@
 ; #Warn ; Enable warnings to assist with detecting common errors.
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
-
+#Persistent
 #Include libs\JSON.ahk
 
 ; Use OPENAI_TOKEN environment variable
@@ -64,7 +64,7 @@ PrepareRequestBody(section) {
     IniRead, model, config.ini, % section, model, gpt-3.5-turbo
     IniRead, temperature, config.ini, % section, temperature, 0.7
     IniRead, systemPrompt, config.ini, % section, system_prompt
-    
+
     ; Make sure system_prompt param is defined
     if (systemPrompt == "ERROR") {
         MsgBox,, Missing System Prompt, Please set the system_prompt parameter in the config file.
@@ -94,7 +94,7 @@ SendRequest(requestBody) {
 
     response := http.ResponseText
 
-    ; Parse the response 
+    ; Parse the response
     jsonResponse := Json.Load(response)
 
     ; Check for errors
@@ -103,13 +103,17 @@ SendRequest(requestBody) {
         MsgBox,, Response Error, % err
         return
     }
-    
+
     ; Return the message content
     return jsonResponse.choices[1].message.content
 }
 
-; Trigger the script when the user presses Alt + .
-!.::
+; Init the popup menu shortcut
+IniRead, popupMenuShortcut, config.ini, settings, popup_menu_shortcut, !.
+Hotkey, % popupMenuShortcut, ShowMenu
+
+; Show the popup menu
+ShowMenu() {
     try {
         Menu, popupMenu, DeleteAll
     }
@@ -136,12 +140,13 @@ SendRequest(requestBody) {
         Menu, popupMenu, Add, % label, MenuHandler
     }
     Menu, popupMenu, Show
-return
+    return
+}
 
 MenuHandler:
     try {
         section := prompts[A_ThisMenuItem]
-        
+
         ; If the section is not defined, return
         if not (section) {
             return
