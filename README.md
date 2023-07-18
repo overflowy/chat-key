@@ -20,11 +20,11 @@ With an abundance of AI-powered content-generating tools available on the market
 
 ## Example
 
-![](assets/example.mp4)
+https://github.com/overflowy/chat-key/assets/98480250/81b9ceb7-5c19-47ef-b4d7-ffc84a552ca3
 
 ## Usage
 
-1. Please ensure that you have properly configured the OPENAI_TOKEN environment variable
+1. Please ensure that you have properly configured the `OPENAI_TOKEN` environment variable
 2. Download the latest release from the [releases](https://github.com/overflowy/chat-key/releases/) page
 3. Extract the zip file
 4. Run `ChatKey.exe`
