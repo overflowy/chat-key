@@ -9,7 +9,7 @@ Supercharge your productivity with ChatGPT/GPT-4 and AutoHotkey
 - [Why?](#why)
 - [Example](#example)
 - [Usage](#usage)
-- [Config](#config)
+- [Configuration](#configuration)
   - [Basic settings](#basic-settings)
   - [Adding prompts](#adding-prompts)
   - [Prompt settings](#prompt-settings)
@@ -35,7 +35,7 @@ https://github.com/overflowy/chat-key/assets/98480250/81b9ceb7-5c19-47ef-b4d7-ff
 9. Wait for the response to be generated
 10. Review the response and press `Enter` to insert it into the application
 
-## Config
+## Configuration
 
 You can configure ChatKey by editing the included `config.ini` file.
 
