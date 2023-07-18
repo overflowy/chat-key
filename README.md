@@ -50,7 +50,7 @@ More settings will be added in future releases.
 
 ### Adding prompts
 
-You can add new prompts by adding a new section to the `config.ini` file. Let's say you want to add a prompt to translate any text to Italian. You can do so by adding the following section to the config file:
+To add new prompts, simply include a new section in the `config.ini` file. For instance, if you wish to include a prompt for translating text to Italian, you can achieve this by appending the following section to the configuration file:
 
 ```ini
 [prompt_translate_to_italian]
