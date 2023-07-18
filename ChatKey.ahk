@@ -149,6 +149,8 @@ ShowMenu() {
     return
 
     MenuHandler:
+        Gui, Destroy
+
         try {
             section := prompts[A_ThisMenuItem]
 
@@ -175,13 +177,34 @@ ShowMenu() {
             ; Remove the tooltip
             ToolTip
 
-            ; Paste the text
-            PasteText(text)
+            if (text == "") {
+                return
+            }
+
+            ; Create the main edit control and display the window
+            Gui, Add, Edit, vMainEdit WantTab W600 R20
+            Gui, Font, s11 cBlack, Verdana
+            GuiControl, Font, MainEdit
+            GuiControl,, MainEdit, % text
+            Gui, Add, Button, Default, Confirm
+            Gui, Show,, Response
+            GuiControl, Focus, Confirm
+            SendInput, {End} ; Move the cursor to the end of the text
+            return
+
         }
         catch e {
             ToolTip
         }
+
+    ButtonConfirm:
+        Gui, Submit, NoHide
+        GuiControlGet, text,, MainEdit
+        Gui, Destroy
+
+        PasteText(text)
     return
+
 }
 
 ; Init the popup menu hotkey
