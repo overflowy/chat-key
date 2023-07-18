@@ -64,8 +64,11 @@ PasteText(text) {
 }
 
 PrepareRequestBody(section) {
-    ; Copy the selected text
+    ; Copy the selected text]
     text := CopyText()
+
+    Gui, Destroy ; Destroy previous GUI
+
     if (text == "") {
         return
     }
@@ -149,7 +152,6 @@ ShowMenu() {
     return
 
     MenuHandler:
-        Gui, Destroy
 
         try {
             section := prompts[A_ThisMenuItem]
