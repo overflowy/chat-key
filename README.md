@@ -2,7 +2,7 @@
 
 Supercharge your productivity with ChatGPT/GPT-4 and AutoHotkey
 
-![](assets/hero.jpg)
+<img src="assets/hero.jpg" width="50%">
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ With an abundance of AI-powered content-generating tools available on the market
 
 ## Example
 
-https://github.com/overflowy/chat-key/blob/main/assets/example.webm
+![](assets/example.mp4)
 
 ## Usage
 
