@@ -16,7 +16,7 @@ Supercharge your productivity with ChatGPT/GPT-4 and AutoHotkey
 
 ## Why?
 
-With an abundance of AI-powered content-generating tools available on the internet, many come with cost restrictions or require a browser. ChatKey is free, completely [customizable](#config), and works in any application that supports text input.
+With an abundance of AI-powered content-generating tools available on the internet, many come with cost restrictions or require a browser. ChatKey is free, completely [customizable](#configuration), and works in any application that supports text input.
 
 ## Example
 
