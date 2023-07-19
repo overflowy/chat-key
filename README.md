@@ -1,39 +1,36 @@
-# ChatKey 🚀
+<p align="center"><img src="assets/logo.png"  alt="ChatKey Logo"></p>
 
-Supercharge your productivity with ChatGPT/GPT-4 and AutoHotkey
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT">
+  </a>
+  <a href="https://github.com/overflowy/chat-key/releases/latest">
+    <img src="https://img.shields.io/github/v/release/overflowy/chat-key?logo=github" alt="Latest Release">
+  </a>
+  <a href="https://github.com/overflowy/chat-key/releases/latest">
+    <img src="https://img.shields.io/github/downloads/overflowy/chat-key/total.svg?logo=github" alt="Total Downloads">
+  </a>
+  <a href="https://www.autohotkey.com">
+    <img src="https://img.shields.io/badge/powered_by-AutoHotkey-orange?logo=AutoHotkey" alt="Powered By: AutoHokey">
+  </a>
+</p>
 
-<img src="assets/hero.jpg" width="50%">
+## About
 
-## Table of Contents
-
-- [Why?](#why)
-- [Example](#example)
-- [Usage](#usage)
-- [Configuration](#configuration)
-  - [Basic settings](#basic-settings)
-  - [Adding prompts](#adding-prompts)
-  - [Prompt settings](#prompt-settings)
-
-## Why?
-
-With an abundance of AI-powered content-generating tools available on the internet, many come with cost restrictions or require a browser. ChatKey is free, completely [customizable](#configuration), and works in any application that supports text input.
-
-## Example
-
-https://github.com/overflowy/chat-key/assets/98480250/81b9ceb7-5c19-47ef-b4d7-ffc84a552ca3
+ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in any application that supports text input.
 
 ## Usage
 
-1. Please ensure that you have properly configured the `OPENAI_TOKEN` environment variable
-2. Download the latest release from the [releases](https://github.com/overflowy/chat-key/releases/) page
-3. Extract the zip file
+1. Please ensure that you have configured the OPENAI_TOKEN environment variable with your API key
+2. Download the latest release from the [releases](https://github.com/overflowy/chat-key/releases/latest) page
+3. Extract all files from the zip
 4. Run `ChatKey.exe`
 5. Start typing in any application that supports text input
-6. Select the text you want to use as basis for the prompt
+6. Select the text to use as input for the prompt
 7. Press the hotkey to show the popup menu (default: `Alt + .`).
-8. Select the prompt you want to use
+8. Select the prompt from the popup menu
 9. Wait for the response to be generated
-10. Review the response and press `Enter` to insert it into the application
+10. Review the generated response and press `Enter`
 
 ## Configuration
 
@@ -41,12 +38,12 @@ You can configure ChatKey by editing the included `config.ini` file.
 
 ### Basic settings
 
-| Key            | Description                                          | Default   |
-| -------------- | ---------------------------------------------------- | --------- |
-| `hotkey`       | The hotkey to show the popup menu                    | `Alt + .` |
-| `replace_text` | Whether to replace the selected text with the prompt | `0`       |
+| Key                 | Description                                          | Default   |
+| ------------------- | ---------------------------------------------------- | --------- |
+| `popup_menu_hotkey` | The hotkey to show the popup menu                    | `Alt + .` |
+| `replace_text`      | Whether to replace the selected text with the prompt | `0`       |
 
-More settings will be added in future releases.
+*More settings will be added in future releases.
 
 ### Adding prompts
 
@@ -61,15 +58,15 @@ temperature = 0.2
 model = gpt-3.5-turbo
 ```
 
-To ensure that the newly added prompt is available in the popup menu, it is necessary to include it in the `[popup_menu]` section. You also have the option to add separators to the popup menu by using the `---` key.
-
-There's no need to restart ChatKey after making changes to the config file. The changes will be applied automatically.
+To ensure that the newly added prompt is available in the popup menu, it is necessary to include it in the `[popup_menu]` section. Additionally, if you have already configured multiple prompts, you can tidy up the popup menu by utilizing `---` as a separator.
 
 ```ini
 [popup_menu]
 ---
 prompt_translate_to_italian
 ```
+
+The changes will be applied automatically, there's no need to restart ChatKey (the only exception to this rule is the global `popup_menu_hotkey`).
 
 ### Prompt settings
 
@@ -83,4 +80,8 @@ You can individually configure the parameters of each prompt. If keys with defau
 | `temperature`   | The temperature to use when generating the response (0.0 - 1.0)                                          | `0.7`     |
 | `model`         | The model to use when generating the response, more info [here](https://platform.openai.com/docs/models) | `gpt-3.5` |
 
-More parameters will be included in future releases.
+*More parameters will be included in future releases.
+
+## Acknowledgements
+
+- [cocobelgica](https://github.com/cocobelgica) for the JSON lib
