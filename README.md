@@ -19,6 +19,12 @@
 
 ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in any application that supports text input.
 
+<p align="center">
+  <a href="https://github.com/overflowy/chat-key/releases/latest">
+    <img src="assets/screenshot.png" alt="Screenshot">
+  </a>
+</p>
+
 ## Usage
 
 1. Please ensure that you have configured the OPENAI_TOKEN environment variable with your API key
