@@ -102,15 +102,15 @@ SendRequest(requestBody) {
     ; Convert the request body to valid JSON
     requestBodyJson := Json.Dump(requestBody)
 
+    ; Send the request
     http := ComObjCreate("Msxml2.ServerXMLHTTP")
     http.Open("POST", "https://api.openai.com/v1/chat/completions", false)
     http.SetRequestHeader("Authorization", "Bearer " . API_KEY)
     http.SetRequestHeader("Content-Type", "application/json")
     http.Send(requestBodyJson)
 
-    response := http.ResponseText
-
     ; Parse the response
+    response := http.ResponseText
     jsonResponse := Json.Load(response)
 
     ; Check for errors
@@ -186,15 +186,18 @@ ShowMenu() {
                 return
             }
 
-            ; Create the main edit control and display the window
-            Gui, Add, Edit, vMainEdit WantTab W600 R20
+            Gui, Add, Edit, vMainEdit WantTab W600 R20 ; Create the main edit control
+            Gui, -Caption +LastFound +AlwaysOnTop ; Hide the title bar and make the window topmost
+
             Gui, Font, s11 cBlack, Verdana
             GuiControl, Font, MainEdit
             GuiControl,, MainEdit, % text
             Gui, Add, Button, Default, Confirm
-            Gui, Show,, Response
-            GuiControl, Focus, Confirm
+
+            Gui, Show,, ; Show the GUI window
+            GuiControl, Focus, Confirm ; Set focus to the Confirm button
             SendInput, {End} ; Move the cursor to the end of the text
+
             return
 
         }
