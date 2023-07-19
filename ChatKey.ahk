@@ -5,6 +5,9 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Persistent
 #Include libs\JSON.ahk
 
+; Set the tray icon
+Menu, Tray, Icon, assets\app.ico
+
 ; Use OPENAI_TOKEN environment variable
 EnvGet, API_KEY, OPENAI_TOKEN
 
