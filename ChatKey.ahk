@@ -124,6 +124,15 @@ SendRequest(requestBody) {
     return jsonResponse.choices[1].message.content
 }
 
+HideTrayTip() {
+    TrayTip ; Attempt to hide it the normal way
+    if SubStr(A_OSVersion,1,3) = "10." {
+        Menu Tray, NoIcon
+        Sleep 200
+        Menu Tray, Icon
+    }
+}
+
 ; Show the popup menu
 ShowMenu() {
     try {
@@ -155,57 +164,49 @@ ShowMenu() {
     return
 
     MenuHandler:
+        TrayTip,, Waiting..., 5, 1
 
-        try {
-            section := prompts[A_ThisMenuItem]
+        section := prompts[A_ThisMenuItem]
 
-            ; If the section is not defined, return
-            if not (section) {
-                MsgBox, "Section not defined"
-                return
-            }
-
-            ; Show a generic tooltip
-            ToolTip, ...
-            Sleep, 200
-
-            ; Prepare the request body
-            requestBody := PrepareRequestBody(section)
-            if (requestBody == "") {
-                ToolTip
-                return
-            }
-
-            ; Send the request
-            text := SendRequest(requestBody)
-
-            ; Remove the tooltip
-            ToolTip
-
-            if (text == "") {
-                return
-            }
-
-            Gui, Add, Edit, vMainEdit WantTab W600 R20 ; Create the main edit control
-            Gui, -Caption +LastFound +AlwaysOnTop ; Hide the title bar and make the window topmost
-
-            Gui, Font, s11 cBlack, Verdana
-            GuiControl, Font, MainEdit
-            GuiControl,, MainEdit, % text
-            Gui, Add, Button, Default, Confirm
-
-            Gui, Show,, ; Show the GUI window
-            GuiControl, Focus, Confirm ; Set focus to the Confirm button
-            SendInput, {End} ; Move the cursor to the end of the text
-
+        ; If the section is not defined, return
+        if not (section) {
+            MsgBox, "Section not defined"
             return
-
         }
-        catch e {
+
+        ; Prepare the request body
+        requestBody := PrepareRequestBody(section)
+        if (requestBody == "") {
             ToolTip
+            return
         }
 
-    ButtonConfirm:
+        ; Send the request and get the response
+        responseText := SendRequest(requestBody)
+        HideTrayTip()
+
+        if (responseText == "") {
+            return
+        }
+
+        Gui, -Caption +AlwaysOnTop
+        Gui, Margin, 0, 0
+        Gui, Font, s13 c1d1d1d Calibri
+        Gui, Color, c1d1d1d, c1d1d1d
+        Gui, Add, Progress, x-1 y-1 w400 h32 Backgroundb5614b Disabled
+        Gui, Add, Text, x0 y0 w400 h30 BackgroundTrans Center 0x200 gGuiMove vCaption, ChatKey
+        Gui, Add, Edit, vMainEdit cb4b4b4 x6 y+14 w411 r20 -E0x200 ; Add the edit box
+        GuiControl,, MainEdit, % responseText ; Set the text
+        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, assets\enter.ico
+        Gui, Add, Button, y+10 Default gConfirm, Confirm ; Add a hidden button so we can use Enter to confirm
+        Gui, +LastFound ; Make the GUI window the last found window for the next WinSet
+        WinSet, Region, 0-0 w400 h508 r6-6 ; Round the corners
+        Gui, Show, w400
+        SendInput, {End} ; Move the cursor to the end of the text
+        GuiControl, Focus, Confirm ; Focus the hidden button
+    return
+
+    Confirm:
         Gui, Submit, NoHide
         GuiControlGet, text,, MainEdit
         Gui, Destroy
@@ -213,6 +214,13 @@ ShowMenu() {
         PasteText(text)
     return
 
+    GuiMove:
+        PostMessage, 0xA1, 2
+    return
+
+    GuiEscape:
+        Gui, Destroy
+    return
 }
 
 ; Init the popup menu hotkey
