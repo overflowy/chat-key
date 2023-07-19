@@ -212,3 +212,5 @@ ShowMenu() {
 ; Init the popup menu hotkey
 IniRead, popupMenuHotkey, config.ini, settings, popup_menu_hotkey, !.
 Hotkey, % popupMenuHotkey, ShowMenu
+
+TrayTip,, Ready to use, 3, 1
