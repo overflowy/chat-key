@@ -228,3 +228,30 @@ IniRead, popupMenuHotkey, config.ini, settings, popup_menu_hotkey, !.
 Hotkey, % popupMenuHotkey, ShowMenu
 
 TrayTip,, Ready to use, 3, 1
+
+Menu, Tray, NoStandard
+Menu, Tray, Add, Edit Config, EditConfig
+Menu, Tray, Add, Reload, Reload_
+Menu, Tray, Add, About
+Menu, Tray, Add, Update ChatKey, Update
+Menu, Tray, Add, Exit
+return
+
+EditConfig:
+    Run, %A_ScriptDir%\config.ini
+return
+
+Reload_:
+    Reload
+return
+
+About:
+    Run, https://github.com/overflowy/chat-key
+return
+
+Update:
+    Run, https://github.com/overflowy/chat-key/releases/latest/download/ChatKey.zip
+return
+
+Exit:
+ExitApp
