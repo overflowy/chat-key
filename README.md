@@ -34,7 +34,7 @@ ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in 
 
 ## Configuration
 
-You can configure ChatKey by editing the included `config.ini` file.
+To configure ChatKey, simply edit the `config.ini` file provided.
 
 ### Basic settings
 
