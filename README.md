@@ -91,3 +91,7 @@ You can individually configure the parameters of each prompt. If keys with defau
 ## Acknowledgements
 
 - [cocobelgica](https://github.com/cocobelgica) for the JSON lib
+
+## License
+
+The code in this repository is licensed under the MIT License. See LICENSE for more information.
