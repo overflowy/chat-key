@@ -201,7 +201,7 @@ ShowMenu() {
         DllCall("User32\SetThreadDpiAwarenessContext", "UInt" , -1) ; Disable DPI scaling
         Gui, -Caption +AlwaysOnTop -DPIScale
         Gui, Margin, 0, 0
-        Gui, Font, s13 c1d1d1d Calibri
+        Gui, Font, s13 c1d1d1d, Consolas
         Gui, Color, c1d1d1d, c1d1d1d
         Gui, Add, Progress, x-1 y-1 w400 h32 Backgroundb5614b Disabled
         Gui, Add, Text, x0 y0 w400 h30 BackgroundTrans Center 0x200 gGuiMove vCaption, ChatKey
