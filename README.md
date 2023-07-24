@@ -43,17 +43,17 @@ To configure ChatKey, simply edit the `config.ini` file provided.
 | `popup_menu_hotkey` | The hotkey to show the popup menu                    | `Alt + .` |
 | `replace_text`      | Whether to replace the selected text with the prompt | `0`       |
 
-*More settings will be added in future releases.
+\*More settings will be added in future releases.
 
 ### Adding prompts
 
-To add new prompts, simply include a new section in the `config.ini` file. For instance, if you wish to include a prompt for translating text to Italian, you can achieve this by appending the following section to the configuration file:
+To add new prompts, simply include a new section in the `config.ini` file. For instance, if you wish to include a prompt for translating text to french, you can achieve this by appending the following section to the configuration file:
 
 ```ini
-[prompt_translate_to_italian]
-name = Translate to Italian
+[prompt_translate_to_french]
+name = Translate to French
 shortcut = t
-system_prompt = "I want you to act as an Italian translator. I will say something in any language and you will translate it to Italian. The first thing I want you to translate is:"
+system_prompt = "I want you to act as a French translator. I will say something in any language and you will translate it to French. The first thing I want you to translate is:"
 temperature = 0.2
 model = gpt-3.5-turbo
 ```
@@ -63,7 +63,7 @@ To ensure that the newly added prompt is available in the popup menu, it is nece
 ```ini
 [popup_menu]
 ---
-prompt_translate_to_italian
+prompt_translate_to_french
 ```
 
 The changes will be applied automatically, there's no need to restart ChatKey (the only exception to this rule is the global `popup_menu_hotkey`).
@@ -80,8 +80,9 @@ You can individually configure the parameters of each prompt. If keys with defau
 | `temperature`   | The temperature to use when generating the response (0.0 - 1.0)                                          | `0.7`     |
 | `model`         | The model to use when generating the response, more info [here](https://platform.openai.com/docs/models) | `gpt-3.5` |
 
-*More parameters will be included in future releases.
+\*More parameters will be included in future releases.
 
 ## Acknowledgements
 
 - [cocobelgica](https://github.com/cocobelgica) for the JSON lib
+- [teadrinker](https://www.autohotkey.com/boards/viewtopic.php?t=113529) for the HBitmapFromResource lib
