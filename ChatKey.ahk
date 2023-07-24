@@ -1,3 +1,7 @@
+;@Ahk2Exe-Base %A_AhkPath%
+;@Ahk2Exe-AddResource %A_ScriptDir%\assets\app.ico
+;@Ahk2Exe-AddResource %A_ScriptDir%\assets\enter.ico
+
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn ; Enable warnings to assist with detecting common errors.
 SendMode Input ; Recommended for new scripts due to its superior speed and reliability.
@@ -6,7 +10,12 @@ SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Include libs\JSON.ahk
 
 ; Set the tray icon
-Menu, Tray, Icon, assets\app.ico
+;@Ahk2Exe-IgnoreBegin
+Menu, Tray, Icon, %A_ScriptDir%\assets\app.ico
+;@Ahk2Exe-IgnoreEnd
+/*@Ahk2Exe-Keep
+Menu, Tray, Icon, %A_ScriptName%
+*/
 
 ; Use OPENAI_TOKEN environment variable
 EnvGet, API_KEY, OPENAI_TOKEN
@@ -198,7 +207,15 @@ ShowMenu() {
         Gui, Add, Text, x0 y0 w400 h30 BackgroundTrans Center 0x200 gGuiMove vCaption, ChatKey
         Gui, Add, Edit, vMainEdit cb4b4b4 x6 y+14 w411 r20 -E0x200 ; Add the edit box
         GuiControl,, MainEdit, % responseText ; Set the text
-        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, assets\enter.ico
+
+        ;@Ahk2Exe-IgnoreBegin
+        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, %A_ScriptDir%\assets\enter.ico
+        ;@Ahk2Exe-IgnoreEnd
+        /*@Ahk2Exe-Keep
+        handler = HBitmapFromResource("enter.ico")
+        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, % "HBITMAP:" . handler
+        */
+
         Gui, Add, Button, y+10 Default gConfirm, Confirm ; Add a hidden button so we can use Enter to confirm
         Gui, +LastFound ; Make the GUI window the last found window for the next WinSet
         WinSet, Region, 0-0 w400 h508 r6-6 ; Round the corners
