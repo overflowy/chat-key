@@ -89,6 +89,12 @@ PrepareRequestBody(section) {
     ; Read config parameters
     IniRead, model, config.ini, % section, model, gpt-3.5-turbo
     IniRead, temperature, config.ini, % section, temperature, 0.7
+
+    IniRead, top_p, config.ini, % section, top_p
+    IniRead, max_tokens, config.ini, % section, max_tokens
+    IniRead, presence_penalty, config.ini, % section, presence_penalty
+    IniRead, frequency_penalty, config.ini, % section, frequency_penalty
+
     IniRead, systemPrompt, config.ini, % section, system_prompt
 
     ; Make sure system_prompt param is defined
@@ -100,7 +106,21 @@ PrepareRequestBody(section) {
     ; Prepare the request body
     requestBody := {}
     requestBody.model := model
-    requestBody.temperature := temperature + 0 ; Convert to number
+    requestBody.temperature := temperature + 0
+
+    if (top_p != "ERROR") {
+        requestBody.top_p := top_p + 0
+    }
+    if (max_tokens != "ERROR") {
+        requestBody.max_tokens := max_tokens + 0
+    }
+    if (presence_penalty != "ERROR") {
+        requestBody.presence_penalty := presence_penalty + 0
+    }
+    if (frequency_penalty != "ERROR") {
+        requestBody.frequency_penalty := frequency_penalty + 0
+    }
+
     requestBody.messages := [{"role": "system", "content": systemPrompt}, {"role": "user", "content": text}]
 
     return requestBody

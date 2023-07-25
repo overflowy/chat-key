@@ -78,15 +78,16 @@ The changes will be applied automatically, there's no need to restart ChatKey (t
 
 You can individually configure the parameters of each prompt. If keys with default values are omitted, the default values will be used instead.
 
-| Key             | Description                                                                                              | Default   |
-| --------------- | -------------------------------------------------------------------------------------------------------- | --------- |
-| `name`          | The name of the prompt that will be displayed in the popup menu                                          |           |
-| `shortcut`      | The shortcut key to select the prompt from the popup menu                                                |           |
-| `system_prompt` | The prompt that will be used to generate the response                                                    |           |
-| `temperature`   | The temperature to use when generating the response (0.0 - 1.0)                                          | `0.7`     |
-| `model`         | The model to use when generating the response, more info [here](https://platform.openai.com/docs/models) | `gpt-3.5` |
-
-\*More parameters will be included in future releases.
+| Key                 | Description                                                                                              | Default   |
+| ------------------- | -------------------------------------------------------------------------------------------------------- | --------- |
+| `name`              | The name of the prompt that will be displayed in the popup menu                                          |           |
+| `shortcut`          | The shortcut key to select the prompt from the popup menu                                                |           |
+| `system_prompt`     | The prompt that will be used to generate the response                                                    |           |
+| `model`             | The model to use when generating the response, more info [here](https://platform.openai.com/docs/models) | `gpt-3.5` |
+| `temperature`       | The temperature to use when generating the response (0.0 - 2.0)                                          | `0.7`     |
+| `top_p`             | The top_p to use when generating the response (0.0 - 1.0)                                                |           |
+| `presence_penalty`  | Increase the model's likelihood to talk about new topics (-2.0 - 2.0)                                    |           |
+| `frequency_penalty` | Decrease the model's likelihood to repeat the same line verbatim (-2.0 - 2.0)                            |           |
 
 ## Acknowledgements
 
