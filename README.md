@@ -96,4 +96,4 @@ You can individually configure the parameters of each prompt. If keys with defau
 
 ## License
 
-The code in this repository is licensed under the MIT License. See LICENSE for more information.
+The code in this repository is licensed under the MIT License. See [LICENSE](LICENSE) for more information.
