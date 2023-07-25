@@ -58,10 +58,10 @@ CopyText() {
 PasteText(text) {
     global prevClipboard
 
-    IniRead, replaceText, config.ini, settings, replace_text, 0
-    replaceText += 0 ; Convert to number
+    IniRead, replace_text, config.ini, settings, replace_text, 0
+    replace_text += 0 ; Convert to number
 
-    if (replaceText == 1) {
+    if (replace_text == 1) {
         clipboard := text
     }
     else {
@@ -95,11 +95,11 @@ PrepareRequestBody(section) {
     IniRead, presence_penalty, config.ini, % section, presence_penalty
     IniRead, frequency_penalty, config.ini, % section, frequency_penalty
 
-    IniRead, systemPrompt, config.ini, % section, system_prompt
+    IniRead, system_content, config.ini, % section, system_content
 
-    ; Make sure system_prompt param is defined
-    if (systemPrompt == "ERROR") {
-        MsgBox,, Missing System Prompt, Please set the system_prompt parameter in the config file.
+    ; Make sure system_content param is defined
+    if (system_content == "ERROR") {
+        MsgBox,, Missing System Prompt, Please set the system_content parameter in the config file.
         return
     }
 
@@ -121,7 +121,7 @@ PrepareRequestBody(section) {
         requestBody.frequency_penalty := frequency_penalty + 0
     }
 
-    requestBody.messages := [{"role": "system", "content": systemPrompt}, {"role": "user", "content": text}]
+    requestBody.messages := [{"role": "system", "content": system_content}, {"role": "user", "content": text}]
 
     return requestBody
 }
@@ -264,8 +264,8 @@ ShowMenu() {
 }
 
 ; Init the popup menu hotkey
-IniRead, popupMenuHotkey, config.ini, settings, popup_menu_hotkey, !.
-Hotkey, % popupMenuHotkey, ShowMenu
+IniRead, popup_menu_hotkey, config.ini, settings, popup_menu_hotkey, !.
+Hotkey, % popup_menu_hotkey, ShowMenu
 
 TrayTip,, Ready to use, 3, 1
 

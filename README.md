@@ -83,7 +83,7 @@ You can individually configure the parameters of each prompt. If keys with defau
 | ------------------- | -------------------------------------------------------------------------------------------------------- | --------- |
 | `name`              | The name of the prompt that will be displayed in the popup menu                                          |           |
 | `shortcut`          | The shortcut key to select the prompt from the popup menu                                                |           |
-| `system_prompt`     | The prompt that will be used to generate the response                                                    |           |
+| `system_content`    | The prompt that will be used to generate the response (required)                                         |           |
 | `model`             | The model to use when generating the response, more info [here](https://platform.openai.com/docs/models) | `gpt-3.5` |
 | `temperature`       | The temperature to use when generating the response (0.0 - 2.0)                                          | `0.7`     |
 | `top_p`             | The top_p to use when generating the response (0.0 - 1.0)                                                |           |
