@@ -1,6 +1,6 @@
 ;@Ahk2Exe-Base %A_AhkPath%
 ;@Ahk2Exe-AddResource %A_ScriptDir%\assets\app.ico
-;@Ahk2Exe-AddResource %A_ScriptDir%\assets\enter.ico
+;@Ahk2Exe-AddResource %A_ScriptDir%\assets\enter.png
 
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn ; Enable warnings to assist with detecting common errors.
@@ -8,6 +8,7 @@ SendMode Input ; Recommended for new scripts due to its superior speed and relia
 SetWorkingDir %A_ScriptDir% ; Ensures a consistent starting directory.
 #Persistent
 #Include libs\JSON.ahk
+#Include libs\HBitmapFromResource.ahk
 
 ; Set the tray icon
 ;@Ahk2Exe-IgnoreBegin
@@ -212,8 +213,8 @@ ShowMenu() {
         Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, %A_ScriptDir%\assets\enter.ico
         ;@Ahk2Exe-IgnoreEnd
         /*@Ahk2Exe-Keep
-        handler = HBitmapFromResource("enter.ico")
-        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, % "HBITMAP:" . handler
+        handler := HBitmapFromResource("enter.png")
+        Gui, Add, Picture, x350 y+5 gConfirm, % "HBITMAP:" . handler
         */
 
         Gui, Add, Button, y+10 Default gConfirm, Confirm ; Add a hidden button so we can use Enter to confirm
