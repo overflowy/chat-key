@@ -58,10 +58,9 @@ CopyText() {
 PasteText(text) {
     global prevClipboard
 
-    IniRead, replace_text, config.ini, settings, replace_text, 0
-    replace_text += 0 ; Convert to number
+    IniRead, replace_text, config.ini, settings, replace_text, "1"
 
-    if (replace_text == 1) {
+    if (replace_text == "1") {
         clipboard := text
     }
     else {
@@ -194,7 +193,11 @@ ShowMenu() {
     return
 
     MenuHandler:
-        TrayTip,, Waiting..., 5, 1
+        IniRead, show_notification, config.ini, settings, show_notification, "1"
+        ; Show a tray tip while waiting for the response if show_notifications is enabled
+        if (show_notification == "1") {
+            TrayTip,, Waiting..., 5, 1
+        }
 
         section := prompts[A_ThisMenuItem]
 
@@ -213,7 +216,10 @@ ShowMenu() {
 
         ; Send the request and get the response
         responseText := SendRequest(requestBody)
-        HideTrayTip()
+
+        if (show_notification == "1") {
+            HideTrayTip()
+        }
 
         if (responseText == "") {
             return
