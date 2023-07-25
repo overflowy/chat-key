@@ -49,7 +49,7 @@ To configure ChatKey, simply edit the `config.ini` file provided.
 | `popup_menu_hotkey`     | The hotkey to show the popup menu                        | `Alt + .` |
 | `replace_text`          | Whether to replace the selected text with the prompt     | `0`       |
 | `show_notifications`    | Whether to show notifications when generating a response | `1`       |
-| `notifications_timeout` | The timeout for notifications in milliseconds            | `5000`    |
+| `notifications_timeout` | The timeout for notifications in seconds                 | `5`       |
 | `max_input_length`      | The maximum length of input text (0 = unlimited)         | `0`       |
 
 ### Adding prompts
