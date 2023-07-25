@@ -42,14 +42,15 @@ ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in 
 
 To configure ChatKey, simply edit the `config.ini` file provided.
 
-### Basic settings
+### General settings
 
-| Key                 | Description                                          | Default   |
-| ------------------- | ---------------------------------------------------- | --------- |
-| `popup_menu_hotkey` | The hotkey to show the popup menu                    | `Alt + .` |
-| `replace_text`      | Whether to replace the selected text with the prompt | `0`       |
-
-\*More settings will be added in future releases.
+| Key                     | Description                                              | Default   |
+| ----------------------- | -------------------------------------------------------- | --------- |
+| `popup_menu_hotkey`     | The hotkey to show the popup menu                        | `Alt + .` |
+| `replace_text`          | Whether to replace the selected text with the prompt     | `0`       |
+| `show_notifications`    | Whether to show notifications when generating a response | `1`       |
+| `notifications_timeout` | The timeout for notifications in milliseconds            | `5000`    |
+| `max_input_length`      | The maximum length of input text (0 = unlimited)         | `0`       |
 
 ### Adding prompts
 
