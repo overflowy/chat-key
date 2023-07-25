@@ -202,19 +202,20 @@ ShowMenu() {
         DllCall("User32\SetThreadDpiAwarenessContext", "UInt" , -1) ; Disable DPI scaling
         Gui, -Caption +AlwaysOnTop -DPIScale
         Gui, Margin, 0, 0
-        Gui, Font, s13 c1d1d1d, Consolas
         Gui, Color, c1d1d1d, c1d1d1d
         Gui, Add, Progress, x-1 y-1 w400 h32 Backgroundb5614b Disabled
+        Gui, Font, s13 c1d1d1d, Segoe UI
         Gui, Add, Text, x0 y0 w400 h30 BackgroundTrans Center 0x200 gGuiMove vCaption, ChatKey
-        Gui, Add, Edit, vMainEdit cb4b4b4 x6 y+14 w411 r20 -E0x200 ; Add the edit box
+        Gui, Font, s12 c1d1d1d, Consolas
+        Gui, Add, Edit, vMainEdit cb4b4b4 x6 y+14 w410 r20 -E0x200 ; Add the edit box
         GuiControl,, MainEdit, % responseText ; Set the text
 
         ;@Ahk2Exe-IgnoreBegin
-        Gui, Add, Picture, x350 y+5 w42 h42 gConfirm, %A_ScriptDir%\assets\enter.ico
+        Gui, Add, Picture, x350 y+25 w42 h42 gConfirm, %A_ScriptDir%\assets\enter.ico
         ;@Ahk2Exe-IgnoreEnd
         /*@Ahk2Exe-Keep
         handler := HBitmapFromResource("enter.png")
-        Gui, Add, Picture, x350 y+5 gConfirm, % "HBITMAP:" . handler
+        Gui, Add, Picture, x350 y+25 gConfirm, % "HBITMAP:" . handler
         */
 
         Gui, Add, Button, y+10 Default gConfirm, Confirm ; Add a hidden button so we can use Enter to confirm
