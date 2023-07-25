@@ -23,13 +23,13 @@ EnvGet, API_KEY, OPENAI_TOKEN
 
 ; If the API key is not set, show an error message and exit
 if (API_KEY = "") {
-    MsgBox,, Missing API Key, Please set the OPENAI_TOKEN environment variable to your OpenAI API key.
+    MsgBox, 0x30, Missing API Key, Please set the OPENAI_TOKEN environment variable to your OpenAI API key.
     ExitApp
 }
 
 ; If the config file is missing, show an error message and exit
 if not (FileExist("config.ini")) {
-    MsgBox,, Missing Config File, Please make sure the config file is in the same directory as the script.
+    MsgBox, 0x10, Missing Config File, Please make sure the config file is in the same directory as the script.
     ExitApp
 }
 
@@ -44,11 +44,21 @@ CopyText() {
     SendInput, ^c
     ClipWait, 1
 
-    ; If clipboard is empty, return
+    ; Check if the clipboard is empty
     if (clipboard == "") {
-        MsgBox,, No Text Selected, Please select some text before running the script.
+        MsgBox, 0x30, No Text Selected, Please select some text before running the script.
         clipboard := prevClipboard
         return
+    }
+
+    ; Check if the selected text is too long
+    IniRead, max_input_length, config.ini, settings, max_input_length, "0"
+    if (max_input_length != "0") {
+        if (StrLen(clipboard) > max_input_length) {
+            MsgBox, 0x30, Input Too Long, The selected text is too long. Please select a shorter text.
+            clipboard := prevClipboard
+            return
+        }
     }
 
     clipboard := RTrim(clipboard, "`n")
@@ -98,7 +108,7 @@ PrepareRequestBody(section) {
 
     ; Make sure system_content param is defined
     if (system_content == "ERROR") {
-        MsgBox,, Missing System Prompt, Please set the system_content parameter in the config file.
+        MsgBox, 0x30, Missing System Prompt, Please set the system_content parameter in the config file.
         return
     }
 
@@ -145,7 +155,7 @@ SendRequest(requestBody) {
     ; Check for errors
     err := jsonResponse.error.message
     if (err != "") {
-        MsgBox,, Response Error, % err
+        MsgBox, 0x30, Response Error, % err
         return
     }
 
@@ -201,16 +211,9 @@ ShowMenu() {
 
         section := prompts[A_ThisMenuItem]
 
-        ; If the section is not defined, return
-        if not (section) {
-            MsgBox, "Section not defined"
-            return
-        }
-
         ; Prepare the request body
         requestBody := PrepareRequestBody(section)
         if (requestBody == "") {
-            ToolTip
             return
         }
 
