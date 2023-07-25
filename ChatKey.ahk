@@ -1,4 +1,9 @@
 ;@Ahk2Exe-Base %A_AhkPath%
+
+;@Ahk2Exe-SetName ChatKey
+;@Ahk2Exe-SetVersion 2.0.0
+;@Ahk2Exe-SetDescription ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in any application that supports text input.
+;@Ahk2Exe-SetCopyright github.com/overflowy
 ;@Ahk2Exe-AddResource %A_ScriptDir%\assets\app.ico
 ;@Ahk2Exe-AddResource %A_ScriptDir%\assets\enter.png
 
