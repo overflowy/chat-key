@@ -28,7 +28,7 @@ ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in 
 ## Usage
 
 1. Please ensure that you have configured the OPENAI_TOKEN environment variable with your API key
-2. Download the latest release from the [here](https://github.com/overflowy/chat-key/releases/latest)
+2. Download the [latest release](https://github.com/overflowy/chat-key/releases/latest)
 3. Extract all files from the zip
 4. Run `ChatKey.exe`
 5. Start typing in any application that supports text input
