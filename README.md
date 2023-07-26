@@ -47,7 +47,7 @@ To configure ChatKey, simply edit the `config.ini` file provided.
 | Key                 | Description                                               | Default   |
 | ------------------- | --------------------------------------------------------- | --------- |
 | `popup_menu_hotkey` | The hotkey to show the popup menu                         | `Alt + .` |
-| `replace_text`      | Whether to replace the selected text with the prompt      | `0`       |
+| `replace_text`      | Whether to replace the selected text with the response    | `0`       |
 | `show_notification` | Whether to show a notification when generating a response | `1`       |
 | `max_input_length`  | The maximum length of input text (0 = unlimited)          | `0`       |
 
