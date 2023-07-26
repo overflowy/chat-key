@@ -40,7 +40,7 @@ ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in 
 
 ## Configuration
 
-To configure ChatKey, simply edit the `config.ini` file provided.
+To configure ChatKey, you can edit the [`config.ini`](config.ini) file provided.
 
 ### General settings
 
@@ -53,7 +53,7 @@ To configure ChatKey, simply edit the `config.ini` file provided.
 
 ### Adding prompts
 
-To add new prompts, simply include a new section in the `config.ini` file. For instance, if you wish to include a prompt for translating text to french, you can achieve this by appending the following section to the configuration file:
+To add new prompts, you must include a new section in the [`config.ini`](config.ini) file. For instance, if you wish to include a prompt for translating text to French, you can achieve this by appending the following section to the configuration file:
 
 ```ini
 [prompt_translate_to_french]
@@ -64,7 +64,7 @@ temperature = 0.2
 model = gpt-3.5-turbo
 ```
 
-To ensure that the newly added prompt is available in the popup menu, it is necessary to include it in the `[popup_menu]` section. Additionally, if you have already configured multiple prompts, you can tidy up the popup menu by utilizing `---` as a separator.
+To ensure that the newly added prompt is available in the popup menu, it must be included in the `[popup_menu]` section. Additionally, if you have already configured multiple prompts, you can tidy up the popup menu by utilizing `---` as a separator.
 
 ```ini
 [popup_menu]
