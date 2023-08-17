@@ -38,6 +38,10 @@ ChatKey is small tool that enables you to use your own ChatGPT/GPT-4 prompts in 
 9. Wait for the response to be generated
 10. Review the generated response and press `Enter`
 
+[I versus AI](https://www.youtube.com/@IversusAI) has done an incredible video covering most topics:
+
+[![ChatGPT & Zapier: The Future of AI Automation, Maybe](http://img.youtube.com/vi/4mraUhvVrOc/0.jpg)](https://www.youtube.com/watch?v=4mraUhvVrOc&t=628s)
+
 ## Configuration
 
 To configure ChatKey, you can edit the [`config.ini`](config.ini) file provided.
