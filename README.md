@@ -95,8 +95,10 @@ You can individually configure the parameters of each prompt. If keys with defau
 
 ## Acknowledgements
 
+- [I versus AI](https://www.youtube.com/@IversusAI) for the awesome tutorial video
 - [cocobelgica](https://github.com/cocobelgica) for the JSON lib
 - [teadrinker](https://www.autohotkey.com/boards/viewtopic.php?t=113529) for the HBitmapFromResource lib
+
 
 ## License
 
